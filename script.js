@@ -14,3 +14,6 @@ lb.querySelector('.lb-close').addEventListener('click',closeLb);lb.querySelector
 const cursor=document.querySelector('.cursor');if(cursor&&matchMedia('(pointer:fine)').matches){addEventListener('pointermove',e=>cursor.style.left=e.clientX+'px', {passive:true});addEventListener('pointermove',e=>cursor.style.top=e.clientY+'px',{passive:true});document.querySelectorAll('a,button,video').forEach(el=>{el.addEventListener('mouseenter',()=>cursor.classList.add('active'));el.addEventListener('mouseleave',()=>cursor.classList.remove('active'))})}
 const vids=[...document.querySelectorAll('video')];const vo=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting&&e.intersectionRatio>.25){v.play().catch(()=>{})}else if(!v.controls)v.pause()}),{threshold:[0,.25,.6]});vids.forEach(v=>vo.observe(v));
 document.querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>img.closest('.archive-item,.feature-main,.feature-side,.about-photo,.full-image,.cta-bg')?.classList.add('media-error')));
+
+// Reliable back-to-top control: explicit scroll instead of relying only on the anchor default.
+document.querySelectorAll('.back-to-top, .footer a[aria-label="Back to top"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}));
